@@ -20,7 +20,7 @@ export function Navbar() {
 
   function submitSearch(event: React.FormEvent) {
     event.preventDefault();
-    navigate({ to: "/games", search: { q: term.trim() || undefined } });
+    navigate({ to: "/games", search: { q: term.trim() } });
   }
 
   const linkClass = (active: boolean) =>
