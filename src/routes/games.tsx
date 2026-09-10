@@ -7,8 +7,8 @@ import { productsQueryOptions } from "@/lib/products-query";
 type GamesSearch = { q?: string | undefined };
 
 export const Route = createFileRoute("/games")({
-  validateSearch: (search: Record<string, unknown>): GamesSearch => ({
-    q: typeof search["q"] === "string" ? String(search["q"]).slice(0, 80) : "",
+  validateSearch: (search: { q?: string | undefined }): GamesSearch => ({
+    q: typeof search.q === "string" ? search.q.slice(0, 80) : "",
   }),
   head: () => ({
     meta: [
