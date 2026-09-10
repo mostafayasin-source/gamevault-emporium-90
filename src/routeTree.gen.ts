@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CartRouteImport } from './routes/cart'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as PlatformPlatformRouteImport } from './routes/platform.$platform'
 import { Route as ProductSkuRouteImport } from './routes/product.$sku'
@@ -17,6 +18,11 @@ import { Route as ProductSkuRouteImport } from './routes/product.$sku'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GamesRoute = GamesRouteImport.update({
@@ -37,12 +43,14 @@ const ProductSkuRoute = ProductSkuRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/games': typeof GamesRoute
   '/platform/$platform': typeof PlatformPlatformRoute
   '/product/$sku': typeof ProductSkuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/games': typeof GamesRoute
   '/platform/$platform': typeof PlatformPlatformRoute
   '/product/$sku': typeof ProductSkuRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
   '/games': typeof GamesRoute
   '/platform/$platform': typeof PlatformPlatformRoute
   '/product/$sku': typeof ProductSkuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/games' | '/platform/$platform' | '/product/$sku'
+  fullPaths: '/' | '/cart' | '/games' | '/platform/$platform' | '/product/$sku'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/games' | '/platform/$platform' | '/product/$sku'
-  id: '__root__' | '/' | '/games' | '/platform/$platform' | '/product/$sku'
+  to: '/' | '/cart' | '/games' | '/platform/$platform' | '/product/$sku'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/games'
+    | '/platform/$platform'
+    | '/product/$sku'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CartRoute: typeof CartRoute
   GamesRoute: typeof GamesRoute
   PlatformPlatformRoute: typeof PlatformPlatformRoute
   ProductSkuRoute: typeof ProductSkuRoute
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/games': {
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CartRoute: CartRoute,
   GamesRoute: GamesRoute,
   PlatformPlatformRoute: PlatformPlatformRoute,
   ProductSkuRoute: ProductSkuRoute,
