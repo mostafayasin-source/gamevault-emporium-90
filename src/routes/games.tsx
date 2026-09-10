@@ -4,7 +4,7 @@ import { CatalogueView } from "@/components/CatalogueView";
 import { ErrorBlock } from "@/components/StateBlocks";
 import { productsQueryOptions } from "@/lib/products-query";
 
-type GamesSearch = { q: string };
+type GamesSearch = { q?: string | undefined };
 
 export const Route = createFileRoute("/games")({
   validateSearch: (search: Record<string, unknown>): GamesSearch => ({
